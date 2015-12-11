@@ -9,7 +9,7 @@ module ClinchTalent
     def call(env)
       env.request_headers['Content-MD5'] = calculated_md5(env)
       env.request_headers['DATE'] = Time.now.utc.httpdate
-      env.request_headers["Authorization"] = "APIAuth #{@options[:access_id]}:#{hmac_signature(env, @options[:secret])}"
+      env.request_headers['Authorization'] = "APIAuth #{@options[:access_id]}:#{hmac_signature(env, @options[:secret])}"
       @app.call(env)
     end
 private

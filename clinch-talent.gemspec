@@ -8,8 +8,9 @@ Gem::Specification.new do |s|
   s.email       = 'damien@clinch.io'
   s.homepage    = 'http://rubygems.org/gems/clinch-talent'
   s.license       = 'MIT'
-  s.add_development_dependency 'json_api_client', '~> 1.0'
+  s.add_dependency 'json_api_client', '~> 1.0'
   s.add_development_dependency 'mocha', '~> 1.1'
+  s.add_development_dependency 'webmock'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
