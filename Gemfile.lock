@@ -38,6 +38,7 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multipart-post (2.0.0)
+    rake (10.4.2)
     safe_yaml (1.0.4)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
@@ -53,6 +54,7 @@ PLATFORMS
 DEPENDENCIES
   clinch-talent!
   mocha (~> 1.1)
+  rake
   webmock
 
 BUNDLED WITH
