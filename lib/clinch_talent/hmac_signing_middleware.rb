@@ -12,32 +12,11 @@ module ClinchTalent
       env.request_headers['Authorization'] = "APIAuth #{@options[:access_id]}:#{hmac_signature(env, @options[:secret])}"
       @app.call(env)
     end
-private
+
+    private
+
     def calculated_md5(env)
-      # if env.request.body
-      #   body = env.request.body
-      # else
-      #  body = ''
-      # end
-      #excluding the body as part of the md5'ing
-      md5_base64digest('')
-    end
-
-    def md5_base64digest(string)
-      if Digest::MD5.respond_to?(:base64digest)
-        Digest::MD5.base64digest(string)
-      else
-        b64_encode(Digest::MD5.digest(string))
-      end
-    end
-
-    def b64_encode(string)
-      if Base64.respond_to?(:strict_encode64)
-        Base64.strict_encode64(string)
-      else
-        # Fall back to stripping out newlines on Ruby 1.8.
-        Base64.encode64(string).gsub(/\n/, '')
-      end
+      Digest::MD5.base64digest(env.body || '')
     end
 
     def fetch_headers(env)
@@ -46,21 +25,21 @@ private
 
     def capitalize_keys(hsh)
       capitalized_hash = {}
-      hsh.each_pair {|k,v| capitalized_hash[k.to_s.upcase] = v }
+      hsh.each_pair {|k, v| capitalized_hash[k.to_s.upcase] = v}
       capitalized_hash
     end
 
     def hmac_signature(env, secret_key)
       canonical_string = canonical_string(env)
       digest = OpenSSL::Digest.new('sha1')
-      b64_encode(OpenSSL::HMAC.digest(digest, secret_key, canonical_string))
+      Base64.strict_encode64(OpenSSL::HMAC.digest(digest, secret_key, canonical_string))
     end
 
     def canonical_string(env)
-      [ content_type(env),
-        content_md5(env),
-        parse_uri(env.url.to_s),
-        timestamp(env)
+      [content_type(env),
+       content_md5(env),
+       parse_uri(env.url.to_s),
+       timestamp(env)
       ].join(',')
     end
 
@@ -80,7 +59,7 @@ private
     end
 
     def find_header(env, keys)
-      keys.map {|key| env.request_headers[key] }.compact.first
+      keys.map {|key| env.request_headers[key]}.compact.first
     end
 
     def parse_uri(uri)
