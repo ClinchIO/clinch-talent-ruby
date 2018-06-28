@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'clinch-talent'
-  s.version     = '0.2.1'
+  s.version     = '0.2.2'
   s.summary     = 'A ruby client for the Clinch Talent API'
   s.description = 'A ruby client for the Clinch Talent API. Requests are HMAC signed. Responses are in JSON API format (https://jsonapi.org). See https://support.clinchtalent.com/article/77-getting-started'
   s.authors     = ['Damien Glancy', 'Steve Quinlan']
